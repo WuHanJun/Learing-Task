@@ -1,21 +1,25 @@
-# ���
-## һ��ʲô�Ǳհ�? ��ʲô���á�
-- �հ���Closure�����ֳƴʷ��հ���Lexical Closure�������հ���function closures���������������ɱ����ĺ�������������õ����ɱ��������������һͬ���ڣ���ʹ�Ѿ��뿪�˴������Ļ���Ҳ�����⡣��[ά���ٿ�](https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)#C.E8.AF.AD.E8.A8.80.E7.9A.84.E5.9B.9E.E8.B0.83.E5.87.BD.E6.95.B0)��
-- ���ã�
-1. ��ȡ�����ڲ��ı�����
-2. ����Щ������ֵʼ�ձ������ڴ��С�
+# 简答
+## 一、什么是闭包? 有什么作用。
+
+- 闭包（Closure）：又称词法闭包（Lexical Closure）或函数闭包（function closures），是引用了自由变量的函数。这个被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。【[维基百科](https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)#C.E8.AF.AD.E8.A8.80.E7.9A.84.E5.9B.9E.E8.B0.83.E5.87.BD.E6.95.B0)】
+- 作用：
+
+1. 读取函数内部的变量。
+2. 让这些变量的值始终保持在内存中。
 
 ------
-- �Ҿ��õô�Ϊʲô��Ҫ�հ�������������
-1. ��c�����У���Ҫ��**�õ������ڵľֲ��������޸�**����ֱ����ϵͳ��̬�����ڴ棬ʹ�ûص������ķ�ʽ��֧�ֻص������Ŀ���Ҫ����������һ������ָ�룬һ��������voidָ�����ڱ����û����ݡ�����������**�����ص������ָ������ʱ��״̬**��
-ע1���ص���������ƻص���ͨ�������������ݵ��������룬ĳһ���ִ�д�������á�
-ע2������ָ�룺����ͨ����ȡַ��Ϊ��������ûʲô����
-ע3����Ȼ��c�ﻹ��������չ��c++��Ҳ�������ڱհ�����ʽ��Ϊ���ڴ˲�ϸ����
-2. ��Javascript�л���һЩ����ʽ�����У���Ҫ**��ʵ���������**������ʹ��ָ�롣��Js�ı����������У������ڲ�����ֱ�Ӷ�ȡȫ�ֱ������������ⲿ�޷���ȡ�����ڲ������ı�������������Ҫ�õ������ڲ��ľֲ�����ʱ���Ϳ��Բ����ڸú����ڲ��ٶ���һ������������ڲ��ĺ����������ⲿ�ĺ����ı���������ܲ����հ�������ʱ��һ��**�ⲿ�ĺ�����ִ��**��һ��**�հ�**��**�γ�**�ˡ��հ��а������ڲ������Ĵ��룬�Լ������ⲿ�����еı��������á���ʱ�����ǾͿ�����**��ȡ���ⲿ�����ڵı���**�ˡ�
+- 我觉得得从为什么需要闭包来理解这个概念。
+
+1. 在c语言中，我要想**得到函数内的局部变量并修改**可以直接让系统动态分配内存，使用回调函数的方式。支持回调函数的库需要两个参数，一个函数指针，一个独立的void指针用于保存用户数据。这样的做法**允许回调函数恢复其调用时的状态**。
+注1：回调函数：简称回调，通过函数参数传递到其他代码，某一块可执行代码的引用。
+注2：函数指针：和普通变量取址作为参数传递没什么区别。
+注3：当然在c里还有两种扩展，c++里也有类似于闭包的显式行为。在此不细表。
+
+2. 在Javascript中或者一些函数式语言中，我要**想实现这个功能**并不能使用指针。在Js的变量作用域中，函数内部可以直接读取全局变量，但函数外部无法读取函数内部声明的变量。当我们需要得到函数内部的局部变量时，就可以采用在该函数内部再定义一个函数。如果内部的函数引用了外部的函数的变量，则可能产生闭包。运行时，一旦**外部的函数被执行**，一个**闭包**就**形成**了。闭包中包含了内部函数的代码，以及所需外部函数中的变量的引用。这时候我们就可以在**获取到外部函数内的变量**了。
 
 ---
 
-- ����ʾ��
+- 看个示例
 ``` javascript
 var a = function () {
   var test = {};
@@ -24,9 +28,9 @@ var a = function () {
   }, 1000);
 }
 ```
-����������У�text��a�ж��壬����setTimeout�����жԱ��������á���aִ���ˣ�����a�Ѿ�ִ���꣬��������˵a�������ִ�й����в����ı��������󶼿��Ա����١���text���ڱ����ã����Բ������������ִ�н����������٣�ֱ����ʱ����ĺ�����ִ�е���
+上面的例子中，text在a中定义，但在setTimeout函数中对保持了引用。当a执行了，尽管a已经执行完，理论上来说a这个函数执行过程中产生的变量、对象都可以被销毁。但text由于被引用，所以不能随这个函数执行结束而被销毁，直到延时器里的函数被执行掉。
 
-- �ٿ�һ��
+- 再看一个
 ``` javascript
 var obj = function () {
   var a = '';
@@ -44,25 +48,28 @@ var b = obj();
 b.set('new val');
 b.get();
 ```
-���� obj���������ִ����֮�������� �������ڶ�����Ӧ�ñ����յ�������ִ�к�ķ���ֵ b ����set��get�������������������a���������ã�����objִ�й����в�����a�Ͳ������١�ֱ��b�ȱ����գ����a�Ż���ա�
+以上 obj这个函数在执行完之后理论上 函数体内东西都应该被回收掉。但它执行后的返回值 b 具有set和get方法。这两个方法里对a保持了引用，所以obj执行过程中产生的a就不会销毁。直到b先被回收，这个a才会回收。
 
-- �հ���ע��㣺
-(1) ���ڱհ���ʹ�ú����еı��������������ڴ��У��ڴ����ĺܴ����Բ������ñհ�������������ҳ���������⣬��IE�п��ܵ����ڴ�й¶����������ǣ����˳�����֮ǰ������ʹ�õľֲ�����ȫ��ɾ����
-(2) �Ͼ仰����˼�ǣ����������������һֱ���ڣ�������������Ҳ����ڣ��������ǵ��õ��Ǹ����������������� ����ʹ�õ��Ǹ��������������������ڴ��У�Ϊʲô����ʹ�õ��Ǹ�������һֱ���ڣ����ոյڶ��������Ѿ������ˡ�
-- �հ��ؼ���
-�����֣��ڴ档
+- 闭包的注意点：
+
+(1) 由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退出函数之前，将不使用的局部变量全部删除。
+(2) 上句话的意思是：父级函数作用域会一直存在，所以其他变量也会存在？不单单是调用的那个变量？错！！！！ 除了使用的那个变量，其他都不会在内存中！为什么我们使用的那个变量会一直存在？，刚刚第二个例子已经解释了。
+- 闭包关键：
+两个字：内存。
 
 ---
 
 
-## ����setTimeout 0��ʲô���ã�
-- ԭ��
-1. setTimeout��setInterval��**���л���**�ǽ��ƶ��Ĵ����Ƴ�����ִ�еȵ���һ��Event Loop���¼���·���ټ���Ƿ�ָ��ʱ�䡣������ˣ���ִ�ж�Ӧ�Ĵ��룬�����������**�ٵȵ���һ��** Event Loop�����жϡ�
-2. setTimeout(f, 0)���ڶ���������Ϊ0����������f�����е����񣨽ű���ͬ������͡���Ϣ���С�ָ��������һ����������ִ�С�Ҳ����˵��setTimeout(f, 0)�������ǣ�**���������ִ��ָ�������񡣶������ǻ����̾�ִ���������**
-3. ע����Ǽ�ʹ��Ϣ�����ǿյģ�0����ʵ����Ҳ�Ǵﲻ���ģ�����ʵ�ʲ��Եó����ֵ��4.7�������ҡ�����html5��׼��setTimeout�Ƴ�ִ�е�ʱ��������4���롣���С�����ֵ���ᱻ�Զ����ӵ�4������Ϊ�˷�ֹ��� setTimeout(f, 0)�������ִ������������⡣
-- Ӧ��
+## 二、setTimeout 0有什么作用？
+- 原理
 
-(1) �����¼��ķ���˳����ص��������Ⱥ�
+1. setTimeout和setInterval的**运行机制**是将制定的代码移出本次执行等到下一轮Event Loop（事件回路）再检查是否到指定时间。如果到了，就执行对应的代码，如果不到，就**再等到下一轮** Event Loop重新判断。
+2. setTimeout(f, 0)将第二个参数设为0，作用是让f在现有的任务（脚本的同步任务和“消息队列”指定的任务）一结束就立刻执行。也就是说，setTimeout(f, 0)的作用是，**尽可能早地执行指定的任务。而并不是会立刻就执行这个任务。**
+3. 注意的是即使消息队列是空的，0毫秒实际上也是达不到的，根据实际测试得出这个值是4.7毫秒左右。根据html5标准，setTimeout推迟执行的时间最少是4毫秒。如果小于这个值，会被自动增加到4。这是为了防止多个 setTimeout(f, 0)语句连续执行造成性能问题。
+
+- 应用
+
+(1) 调整事件的发生顺序（如回调函数的先后）
 ``` Javascript
 var input = document.getElementsByTagName('input[type=button]')[0];
 
@@ -76,15 +83,15 @@ document.body.onclick = function C() {
   input.value += ' body'
 };
 ```
-��������ڵ����ť���ȴ����ص�����A��Ȼ�󴥷�����C���ں���A�У�setTimeout������B�Ƴٵ���һ��Loopִ�У����������ˣ��ȴ�����Ԫ�صĻص�����C��Ŀ���ˡ�
+上面代码在点击按钮后，先触发回调函数A，然后触发函数C。在函数A中，setTimeout将函数B推迟到下一轮Loop执行，这样就起到了，先触发父元素的回调函数C的目的了。
 
-�û��Զ���Ļص�������ͨ�����������Ĭ�϶���֮ǰ���������磬�û�������������ı���keypress�¼���������������ı�֮ǰ��������ˣ�����Ļص������Ǵﲻ��Ŀ�ĵġ�
+用户自定义的回调函数，通常在浏览器的默认动作之前触发。比如，用户在输入框输入文本，keypress事件会在浏览器接收文本之前触发。因此，下面的回调函数是达不到目的的。
 ```
 document.getElementById('input-box').onkeypress = function(event) {
   this.value = this.value.toUpperCase();
 }
 ```
-������������û������ı����������ַ�תΪ��д������ʵ���ϣ���ֻ�ܽ���һ���ַ�תΪ��д����Ϊ�������ʱ��û���յ��ı�������this.valueȡ��������������Ǹ��ַ���ֻ����setTimeout��д������Ĵ�����ܷ������á�
+上面代码想在用户输入文本后，立即将字符转为大写。但是实际上，它只能将上一个字符转为大写，因为浏览器此时还没接收到文本，所以this.value取不到最新输入的那个字符。只有用setTimeout改写，上面的代码才能发挥作用。
 ```
 document.getElementById('my-ok').onkeypress = function() {
   var self = this;
@@ -94,16 +101,16 @@ document.getElementById('my-ok').onkeypress = function() {
 }
 ```
 
-(2) ���������󡢺�ʱ��������ֳɼ���С���ֱַ�ŵ�setTimeout(f, 0)ִ�С�
+(2) 将计算量大、耗时长的任务分成几个小部分分别放到setTimeout(f, 0)执行。
 ```
  var div = document.getElementsByTagName('div')[0];
 
-// д��һ
+// 写法一
 for (var i = 0xA00000; i < 0xFFFFFF; i++) {
   div.style.backgroundColor = '#' + i.toString(16);
 }
 
-// д����
+// 写法二
 var timer;
 var i=0x100000;
 
@@ -115,11 +122,11 @@ function func() {
 
 timer = setTimeout(func, 0);
 ```
-�������������д�������Ǹı�һ����ҳԪ�صı���ɫ��д��һ����������������������ΪJavaScriptִ���ٶ�Զ����DOM������ɴ���DOM�������ѻ�������д�����Ͳ��ᣬ�����setTimeout(f, 0)�ĺô���
+上面代码有两种写法，都是改变一个网页元素的背景色。写法一会造成浏览器“堵塞”，因为JavaScript执行速度远高于DOM，会造成大量DOM操作“堆积”，而写法二就不会，这就是setTimeout(f, 0)的好处。
 
-��һ��ʹ�����ּ��ɵ������Ǵ�������Ĵ�������������ܴ�һ���Դ��������ܻ��������ɺܴ��ѹ������ô����ֳ�һ����С�飬һ�δ���һ�飬����д��setTimeout(highlightNext, 50)�����ӣ�����ѹ���ͻ���ᡣ
-# ����
-## һ.����Ĵ���������٣��޸Ĵ�����`fnArr[i]()`���i��ʹ���������ϵķ�����
+另一个使用这种技巧的例子是代码高亮的处理。如果代码块很大，一次性处理，可能会对性能造成很大的压力，那么将其分成一个个小块，一次处理一块，比如写成setTimeout(highlightNext, 50)的样子，性能压力就会减轻。
+# 代码
+## 一.下面的代码输出多少？修改代码让`fnArr[i]()`输出i，使用两种以上的方法。
 ```
  var fnArr = [];
     for (var i = 0; i < 10; i ++) {
@@ -127,9 +134,9 @@ timer = setTimeout(func, 0);
             return i;
         };
     }
-    console.log( fnArr[3]() );  //���10
+    console.log( fnArr[3]() );  //输出10
 
-    //����һ
+    //方法一
     var fnArr = [];
     for (var i = 0; i < 10; i ++) {
         (function (i) {
@@ -138,21 +145,21 @@ timer = setTimeout(func, 0);
             };
         })(i);
     }
-    console.log( fnArr[3]() );  //���3
+    console.log( fnArr[3]() );  //输出3
 
-    //������
+    //方法二
     var fnArr = [];
     for (var i = 0; i < 10; ++i){
         (function () {
-            var n = i; //var i = i;  //var i = i���У��ᱨ���� ˵fnArr[3] ����һ���������е���˼��
-            fnArr[i] = function () {   //����Ҫ֪������ �����Ѿ��������ı������ٴ�var ����Ч�ģ����������
-                return n; // ͬʱ��ֵ�Ļ����Ḳ��֮ǰ��ֵ
+            var n = i; //var i = i;  //var i = i不行，会报错。 说fnArr[3] 不是一个函数。有点意思。
+            fnArr[i] = function () {   //我需要知道的是 对于已经声明过的变量，再次var 是无效的，不过，如果
+                return n; // 同时赋值的话，会覆盖之前的值
             }
         })();
     }
-    console.log( fnArr[3]() );  //���3
+    console.log( fnArr[3]() );  //输出3
 
-    //������
+    //方法三
     var fnArr = [];
     for (var i = 0; i < 10; i ++) {
         fnArr[i] = function (i) {
@@ -161,10 +168,10 @@ timer = setTimeout(func, 0);
             };
         }(i);
     }
-    console.log( fnArr[3]() );  //���3
+    console.log( fnArr[3]() );  //输出3
 ```
 
-## ����ʹ�ñհ���װһ���������󣬿���ͨ�����·�ʽ��ȡ����״̬��
+## 二、使用闭包封装一个汽车对象，可以通过如下方式获取汽车状态。
 ```
 var Car = //todo;
 Car.setSpeed(30);
@@ -181,12 +188,12 @@ Car.getStatus();  //'stop';
 //Car.speed;  //error
 ```
 ```
- var Car = function(){   //Car��һ�����󣡣�
+ var Car = function(){   //Car是一个对象！！
         var speed = 0;
-        function accelerate() {  //����
+        function accelerate() {  //加速
             speed += 10;
         }
-        function decelerate() {  //����
+        function decelerate() {  //减速
             speed -= 10;
         }
         function getSpeed() {
@@ -214,7 +221,7 @@ Car.getStatus();  //'stop';
     Car.getSpeed();
     Car.setSpeed();
 ```
-## ����һ������ʹ��setTimeoutģ��setInterval�Ĺ���
+## 三、一个函数使用setTimeout模拟setInterval的功能
 ```
 function interval(func, wait){
         var interv = function(){
@@ -224,7 +231,7 @@ function interval(func, wait){
         setTimeout(interv, wait);
     };
 ```
-## �ġ�дһ������������setTimeoutƽ��[��ע���¼�]��Сʱ�����ȡ�
+## 四、写一个函数，计算setTimeout平均[备注：新加]最小时间粒度。
 ```
 function getMini(){
         var i = 0;
@@ -239,62 +246,62 @@ function getMini(){
             clock = setTimeout(arguments.callee, 0);
         }, 0);
     };
-    getMini();  //�ǵõ��ú������Ҵ�����10�������ơ�   //Html5��׼��4ms
+    getMini();  //记得调用函数，找错找了10分钟郁闷。   //Html5标准是4ms
 ```
-## �塢������δ�����������? Ϊʲô?
+## 五、下面这段代码输出结果是? 为什么?
 ```
  var a = 1;
     setTimeout(function(){
-        a = 2;          //setTimeout��������δ���ŵ���һ��event loop���ж��Ƿ�ʱ�䡣
+        a = 2;          //setTimeout函数将这段代码放到下一个event loop中判断是否到时间。
         console.log(a);
-    }, 0);//���õ���0�������Ĭ����С��4����࣬�������ǿ�������2��1��3�������������
-    var a ;  //���������Ч��
-    console.log(a);   //��˳�����1��3
+    }, 0);//设置的是0，浏览器默认最小是4毫秒多，所以我们看到的是2在1和3后面立即输出。
+    var a ;  //这个声明无效。
+    console.log(a);   //按顺序输出1和3
     a = 3;
-    console.log(a);   //���1 3 2��
+    console.log(a);   //输出1 3 2。
 ```
-## ����������δ�����������? Ϊʲô?
+## 六、下面这段代码输出结果是? 为什么?
 ```
 var flag = true;
-setTimeout(function () { //setTimeout��flag = true�ŵ���һ��event loopִ�С�
+setTimeout(function () { //setTimeout将flag = true放到下一轮event loop执行。
     flag = false;
 }, 0);
-while (flag){}  //���������flagһֱ��true ������ѭ����
-console.log(flag);  //�ű������򲻿��ˡ� ԭ�����������whileѭ����
+while (flag){}  //所以这里的flag一直是true 进入死循环。
+console.log(flag);  //脚本根本打不开了。 原因在于上面的while循环。
 ```
-## �ߡ�������δ��������������delayer: 0, delayer:1...��ʹ�ñհ���ʵ�֣�
+## 七、下面这段代码输出？如何输出delayer: 0, delayer:1...（使用闭包来实现）
 ```
 for(var i = 0; i < 5; i++){
         setTimeout(function () {
-            console.log('delayer:' + i ); // �����5��delayer:5 ��Ϊ��δ��뱻�ŵ���Ϣ�������ִ�С�
+            console.log('delayer:' + i ); // 这输出5个delayer:5 因为这段代码被放到消息队列最后执行。
         }, 0);
-        console.log(i);  //���������0 1 2 3 4
+        console.log(i);  //这里先输出0 1 2 3 4
     }
-    //��� 0 1 2 3 4 ����5��delayer:5
+    //输出 0 1 2 3 4 后面5个delayer:5
 ```
-ʹ�ñհ�ʵ��
+使用闭包实现
 ```
-//�ñհ�ʵ��delayer: 0, delayer:1...
-    //����һ
+//用闭包实现delayer: 0, delayer:1...
+    //方法一
     for(var i = 0; i < 5; ++i){
-        (function (i) {    //֪ʶ��عˣ���������Ĳ���δ���룬�ñ�������undefined
+        (function (i) {    //知识点回顾：如果给定的参数未传入，该变量就是undefined
             setTimeout(function () {
                 console.log('delayer:' + i);
             }, 0);
         })(i);
     }
 
-    //������(ͬѧ�����󵼣�������Ǳհ�����Ӵ)
+    //方法二(同学别被我误导，这个不是闭包方法哟)
     for(var i = 0; i < 5; ++i){
             setTimeout(function (i) {
                 console.log('delayer:' + i);
-            }, 0, i); //�������ֻ����ie9���ϰ汾
+            }, 0, i); //这个方法只有在ie9以上版本
     }
 ```
 ---
-[ά���ٿ�](https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)#gcc.E5.AF.B9C.E8.AF.AD.E8.A8.80.E7.9A.84.E6.89.A9.E5.B1.95)
-[������ʦ](https://www.zhihu.com/question/27712980/answer/37768023)
-[��һ����ʦ](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)
-[������ʦ](https://zhuanlan.zhihu.com/p/22486908?refer=study-fe)
-_���̳̰�Ȩ�鱾�˺ͼ��˹����У�ת����˵����Դ_
+[维基百科](https://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)#gcc.E5.AF.B9C.E8.AF.AD.E8.A8.80.E7.9A.84.E6.89.A9.E5.B1.95)
+[朴灵老师](https://www.zhihu.com/question/27712980/answer/37768023)
+[阮一峰老师](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)
+[芳芳老师](https://zhuanlan.zhihu.com/p/22486908?refer=study-fe)
+_本教程版权归本人和饥人谷所有，转载须说明来源_
 
