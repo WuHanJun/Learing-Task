@@ -29,14 +29,6 @@ Step by step.
 
 [jQuery的Ajax](https://wuhanjun.github.io/Learing-Task/Task26/26jQuery-3.html)
 
-[渐变轮播](https://wuhanjun.github.io/Learing-Task/27-jQuery%E8%BD%AE%E6%92%AD/27Carousel-1.html)
-
-[多轮播](https://wuhanjun.github.io/Learing-Task/27-jQuery%E8%BD%AE%E6%92%AD/27Carousel-2.html)
-
-[通过左右放置图片切换轮播](https://wuhanjun.github.io/Learing-Task/27-jQuery%E8%BD%AE%E6%92%AD/27Carousel-3.1.html)
-
-[全屏轮播](https://wuhanjun.github.io/Learing-Task/27-jQuery%E8%BD%AE%E6%92%AD/27Carousel-4Fullpage2.html)
-
 [Any StickUp](https://wuhanjun.github.io/Learing-Task/28-jQuery-stickUp/28-jQuery-anyStickUp.html)
 
 [Stick Up](https://wuhanjun.github.io/Learing-Task/28-jQuery-stickUp/28-jQuery-stickUp.html)
@@ -50,8 +42,6 @@ Step by step.
 [瀑布流，放大缩小动画，封装](https://wuhanjun.github.io/Learing-Task/jQuery-waterfall&&DeBug/waterfall-Object-encapsulation.html)
 
 [构造函数tab封装](https://wuhanjun.github.io/Learing-Task/Object&&Prototype/Tab.html)
-
-[构造函数轮播封装](https://wuhanjun.github.io/Learing-Task/Object&&Prototype/carousel.html#)
 
 [回到顶部构造函数封装](https://wuhanjun.github.io/Learing-Task/Object&&Prototype/go-top.html)
 
