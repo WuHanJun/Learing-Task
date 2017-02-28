@@ -1,7 +1,7 @@
 # Learing-Task
 Step by step.
 
-[closure && timer](https://github.com/WuHanJun/Learing-Task/blob/master/20-Closure%26%26timer/Closure%26%26timer.md)
+[刚学习HTML和CSS时做的一个小页面](http://book.jirengu.com/jirengu-inc/jrg-renwu9/homework/%E5%90%B4%E6%99%97%E5%90%9B/task15-2/index.html#1F)
 
 ## 原生JavaScript
 
