@@ -3,7 +3,7 @@ Step by step.
 
 [刚学习HTML和CSS时做的一个小页面](http://book.jirengu.com/jirengu-inc/jrg-renwu9/homework/%E5%90%B4%E6%99%97%E5%90%9B/task15-2/index.html#1F)
 
-[CSS 3transition学习](https://wuhanjun.github.io/Learing-Task/CSS3/texiao)
+[CSS 3 transition学习](https://wuhanjun.github.io/Learing-Task/CSS3/texiao)
 ## 原生JavaScript
 
 [添加删除节点](https://wuhanjun.github.io/Learing-Task/22-DOM&&Event/Add&&Show.html)
