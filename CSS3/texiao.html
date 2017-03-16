@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>便笺</title>
+    <!--谷歌的font API-->
+    <link href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css">
+</head>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing: border-box;
+    }
+    .clearfix:after {
+        display: block;
+        content: '';
+        clear: both;
+    }
+    html{
+        height: 100%;
+
+    }
+    body{
+        font-family:arial,sans-serif;
+        font-size:16px;
+        background:#666;
+        color:#fff;
+        height: 100%;
+        overflow: hidden;
+    }
+    li{
+        list-style:none;
+    }
+    .main {
+        margin-top: 2em;
+    }
+    .layout {
+        float: left;
+        width: 57em;
+        border: 1px solid;
+        border-radius: 3px;
+    }
+    ul{
+        //border: 1px solid red;
+    }
+    ul li a{
+        text-decoration:none;
+        color:#000;
+        background:#ffc;
+        display:block;
+        height:11em;
+        width:11em;
+        padding:1em;
+    }
+    ul>li {
+        float: left;
+        margin: 3em 0 3em 6em;
+    }
+    ul>li h2 {
+        padding-bottom: 10px;
+    }
+    /*谷歌font api*/
+    ul>li p {
+        font-family: "Reenie Beanie" ,arial,sans-serif,微软雅黑;
+
+    }
+    /*阴影*/
+    ul>li>a
+    {
+        -moz-box-shadow: 5px 5px 7px rgba(33,33,33,1); /* Safari+Chrome */
+        -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7); /* Opera */
+        box-shadow: 5px 5px 7px rgba(33,33,33,.7);  /*前两个值阴影偏移量吗，第三个模糊面积 第四个阴影颜色*/
+
+        -moz-transition:-moz-transform .15s linear;  /*平滑过渡*/
+        -o-transition:-o-transform .15s linear;
+        -webkit-transition:-webkit-transform .25s linear;
+    }
+    /*even偶数 ，odd奇数 注意后面的会覆盖前面的*/
+    ul li:first-child a{
+        -o-transform:rotate(-11deg);
+        -webkit-transform:rotate(-11deg);
+        -moz-transform:rotate(-11deg);
+        position:relative;
+        top:5px;
+    }
+    ul li:nth-child(even) a{
+        -o-transform:rotate(11deg);
+        -webkit-transform:rotate(11deg);
+        -moz-transform:rotate(11deg);
+        position:relative;
+        top:5px;
+        background:#cfc;
+    }
+    ul li:nth-child(3n) a{
+        -o-transform:rotate(-7deg);
+        -webkit-transform:rotate(-7deg);
+        -moz-transform:rotate(-7deg);
+        position:relative;
+        top:-5px;
+        background:#ccf;
+    }
+    ul li:nth-child(5n) a{
+        -o-transform:rotate(5deg);
+        -webkit-transform:rotate(5deg);
+        -moz-transform:rotate(5deg);
+        position:relative;
+        top:-10px;
+    }
+    /*之前用a链接包裹，现在同时设置focus支持tab切换时transform也能生效啦*/
+    ul li a:hover,ul li a:focus{
+        -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
+        -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+        box-shadow:10px 10px 7px rgba(0,0,0,.7);
+        -webkit-transform: scale(1.25) rotate(10deg);  /*transform是改变，transition是过渡!*/
+        -moz-transform: scale(1.25);
+        -o-transform: scale(1.25);
+
+    }
+    h1,h2 {
+        text-align: center;
+    }
+    .side-bar {
+        width: 16em;
+        margin-left: 1em;
+        padding-left: 1em;
+    }
+    .side-bar>ol>li {
+        margin-top: 1em;
+    }
+    .side-bar-left {
+        float: left;
+    }
+    .side-bar-right {
+        float: right;
+    }
+    ol li {
+        list-style: decimal-leading-zero;
+    }
+    .inner-ol li{
+        list-style: disc;
+    }
+</style>
+<body>
+    <h1>本页知识点小总结</h1>
+    <div class="main">
+        <div class="side-bar-left side-bar">
+            <ol>
+                <li>google font API</li>
+                <li>CSS 3选择器：even偶数，odd奇数</li>
+                <li>相对定位top:50% + transform:translateY(-50%)实现已知父元素高度，未知需定位高度的绝对居中</li>
+                <li>box-shadow前两个值阴影偏移量吗，第三个模糊面积 第四个阴影颜色;需加前缀兼容safari opera chrome</li>
+                <li>transition实现平滑[过渡]。linear：匀速。需加前缀兼容safari opera chrome</li>
+                <li>transform[改变] scale：缩放；</li>
+                <li>用a链接包裹元素，并使用focus可以在键盘Tab时选中下一个的便笺</li>
+                <li>允许用a链接包裹块级元素。原因是新的html规范不是按照行内元素和块级元素来分类元素类型了。每个元素都分为类型和内容模型。能不能够包裹要看父元素的内容模型和其内容的类型。a标签能够包裹p标签，p标签不能包裹div</li>
+            </ol>
+        </div>
+        <div class="layout">
+            <h2>transition的优点在于简单易用，但是它有几个很大的局限。</h2>
+            <ul class="clearfix">
+                <li><a href="#"> <!--加a标签是为了支持键盘访问; a标签可以包含h2、p元素-->
+                    <h2>稳稳的老哥：</h2>
+                    <p>transition需要事件触发，所以没法在网页加载时自动发生。recommend!recommend!</p>
+                </a></li>
+                <li><a href="#">
+                    <h2>二大爷：</h2>
+                    <p>transition是一次性的，不能重复发生，除非一再触发。</p>
+                </a></li>
+                <li><a href="#">
+                    <h2>技术弟弟：</h2>
+                    <p>transition只能定义开始状态和结束状态，不能定义中间状态，也就是说只有两个状态。</p>
+                </a></li>
+                <li><a href="#">
+                    <h2>来我家的表妹：</h2>
+                    <p>一条transition规则，只能定义一个属性的变化，不能涉及多个属性。</p>
+                </a></li>
+                <li><a href="#">
+                    <h2>阮一峰老师：</h2>
+                    <p>CSS Animation就是为了解决这些问题而提出的。</p>
+                </a></li>
+                <li><a href="#">
+                    <h2>某武林高手：</h2>
+                    <p>低于25000块的面试再也不去了，它grandma的</p>
+                </a></li>
+            </ul>
+        </div>
+        <div class="side-bar-right side-bar">
+            <ol>
+                <li>transition的作用在于，指定状态变化所需要的时间。</li>
+                <li><code>
+                    img{
+                    transition: 1s height, 1s 1s width;
+                    }
+                </code>
+                    /*后面的宽度延迟一秒*/
+                </li>
+                <li>除了ease逐渐放慢以外，其他模式还有
+                    <ol class="inner-ol">
+                        <li>linear：    匀速</li>
+                        <li>ease-in：加速</li>
+                        <li>ease-out：减速</li>
+                        <li>cubic-bezier函数：自定义速度模式</li>
+                    </ol>
+                </li>
+                <li>
+                    transition的完整属性
+                    <ol class="inner-ol">
+                        <li>transition-property: height;</li>
+                        <li> transition-duration: 1s;</li>
+                        <li> transition-delay: 1s;</li>
+                        <li>transition-timing-function: ease;</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+</body>
+</html>
